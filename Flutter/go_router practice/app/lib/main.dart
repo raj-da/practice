@@ -20,9 +20,9 @@ Widget myApp() {
       ),
       GoRoute(
         name: RouteName.profile,
-        path: '/profile:name',
+        path: '/profile',
         builder: (context, state) {
-          final String name = state.pathParameters['name']!;
+          final String? name = state.uri.queryParameters['name'];
           return ProfilePage(name: name,);
         },
       ),

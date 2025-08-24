@@ -17,7 +17,7 @@ class DashboardPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            context.goNamed(RouteName.profile, pathParameters: {'name': 'Rajaf'});
+            context.goNamed(RouteName.profile, queryParameters: {'name': 'Rajaf'});
           },
           child: Text('Profile'),
         ),
