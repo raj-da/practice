@@ -1,4 +1,5 @@
 import 'package:app/consts/route_name.dart';
+import 'package:app/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +18,13 @@ class DashboardPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            context.goNamed(RouteName.profile, queryParameters: {'name': 'Rajaf'});
+            final user = User(name: 'Rajaf', nickName: 'Rajo');
+
+            context.goNamed(
+              RouteName.profile,
+              queryParameters: {'name': 'Rajaf'},
+              extra: user,
+            );
           },
           child: Text('Profile'),
         ),

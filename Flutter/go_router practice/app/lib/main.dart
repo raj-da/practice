@@ -1,6 +1,7 @@
 import 'package:app/consts/route_name.dart';
 import 'package:app/pages/dashboard_page.dart';
 import 'package:app/pages/profile_page.dart';
+import 'package:app/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,7 +24,8 @@ Widget myApp() {
         path: '/profile',
         builder: (context, state) {
           final String? name = state.uri.queryParameters['name'];
-          return ProfilePage(name: name,);
+          final user = state.extra as User;
+          return ProfilePage(name: name, user: user,);
         },
       ),
     ],
