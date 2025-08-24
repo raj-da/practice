@@ -1,3 +1,4 @@
+import 'package:app/consts/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,7 +17,7 @@ class ProfilePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            context.go('/dashboard');
+            context.goNamed(RouteName.dashboard);
           },
           child: Text('dashboard'),
         ),
