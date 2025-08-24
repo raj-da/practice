@@ -22,9 +22,9 @@ Widget myApp() {
       GoRoute(
         name: RouteName.profile,
         path: '/profile',
-        builder: (context, state) {
+        builder: (context, state) { //? use the state to get passed values
           final String? name = state.uri.queryParameters['name'];
-          final user = state.extra as User;
+          final user = state.extra as User; //* cast to User class
           return ProfilePage(name: name, user: user,);
         },
       ),

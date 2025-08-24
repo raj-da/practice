@@ -22,8 +22,8 @@ class DashboardPage extends StatelessWidget {
 
             context.goNamed(
               RouteName.profile,
-              queryParameters: {'name': 'Rajaf'},
-              extra: user,
+              queryParameters: {'name': 'Rajaf'}, //? use the queryParameters field to pass query parameters
+              extra: user, //? use the extra field to pass complex data type
             );
           },
           child: Text('Profile'),
