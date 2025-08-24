@@ -13,8 +13,19 @@ Widget myApp() {
   final GoRouter router = GoRouter(
     initialLocation: '/dashboard',
     routes: [
-      GoRoute(name: RouteName.dashboard ,path: '/dashboard', builder: (context, state) => DashboardPage()),
-      GoRoute(name: RouteName.profile ,path: '/profile', builder: (context, state) => ProfilePage()),
+      GoRoute(
+        name: RouteName.dashboard,
+        path: '/dashboard',
+        builder: (context, state) => DashboardPage(),
+      ),
+      GoRoute(
+        name: RouteName.profile,
+        path: '/profile:name',
+        builder: (context, state) {
+          final String name = state.pathParameters['name']!;
+          return ProfilePage(name: name,);
+        },
+      ),
     ],
   );
 
