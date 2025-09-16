@@ -3,46 +3,24 @@ package main;
 import "fmt";
 
 func main()  {
-	//* Strings
-	var nameOne string = "nario"; // Explisit declaration
-	var nameTwo = "luigi"; // Implisit declaration
-	var nameThree string; // Default value of empty string
+	age := 22;
+	name := "Rajaf";
 
-	fmt.Println(nameOne, nameTwo, nameThree);
+	//* Print
+	fmt.Print("hello, ");
+	fmt.Print("world!, \n"); // Does not include new line by default
+	
+	//* Println
+	fmt.Println("goodby world");
+	fmt.Println("my age is", age, "and my name is", name);
 
-	nameOne = "peach";
-	nameThree = "powser";
+	//* Printf (formatted string) %_ = format specifier
+	fmt.Printf("my age is %v and my name is %v \n", age, name); //? %v stands for variable
+	fmt.Printf("my age is %v and my name is %q \n", age, name); //? %q for quatation mark around variable
+	fmt.Printf("age is of type %T \n", age); //? %T for type of variable
+	fmt.Printf("you scored %0.2f points! \n", 255.555); //? %f for float and 0.2 for specifing how many decimal points to show
 
-	fmt.Println(nameOne, nameTwo, nameThree);
-
-	nameFour := "yoshi"; // Variable initialization
-
-	fmt.Println(nameFour);
-
-	//* Ints
-	var ageOne int = 20;
-	var ageTwo = 30;
-	ageThree := 40;
-	var ageFour int; // Defaults to Zero
-
-	fmt.Println(ageOne, ageTwo, ageThree, ageFour);
-
-	// bits & memory
-	var numOne int8 = 25; // Int of size 8 bits
-	var numTwo int16 = -129; // Int of size 16 bits
-	var numThree uint32 = 256; // Unsigned int of size 32 bit
-
-	fmt.Println(numOne, numTwo, numThree);
-
-	//* floats
-	var scoreOne float32 = 25.98;
-	var scoreTwo float64 = 100.09841234;
-	scoreThree := 89897098709878979879869.7799876;
-
-	fmt.Println(scoreOne, scoreTwo, scoreThree);
-
-	//* bools
-	var isTrue = false;
-	fmt.Println(isTrue);
-
+	//* Sprintf (save formatted string)
+	var str string = fmt.Sprintf("my age is %v and my name is %v \n", age, name);
+	fmt.Println("the saved string is:", str);
 }
