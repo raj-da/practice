@@ -1,39 +1,29 @@
 package main
 
 import (
-	"fmt";
-	"math"
+	"fmt" 
+	"strings"
 )
 
-func sayGreeting(name string)  {
-	fmt.Printf("Good morning %v \n", name);
-}
+func getInitials(name string) (string, string) {
+	s := strings.TrimSpace(strings.ToUpper(name));
+	names := strings.Split(s, " ");
 
-func sayBye(name string)  {
-	fmt.Printf("Good bye %v \n", name);
-}
-
-//* passing a slice and fuction
-func cycleNames (n []string, f func(string)) {
-	for _, name := range n {
-		f(name);
+	var initials []string;
+	for _, v := range names {
+		initials = append(initials, v[:1])
 	}
+
+	if len(initials) > 1 {
+		return initials[0], initials[1];
+	}
+	return initials[0], "_";
 }
 
-//* returning a value from a function
-func circleArea(r float64) float64{
-	area := math.Pi * r * r;
-	return area
-}
+func main() {
+	fn, sn := getInitials("tifa lockhart");
+	fmt.Println(fn, sn);
 
-func main()  {
-	sayGreeting("mario");
-	sayBye("lugi");
-
-	cycleNames([]string{"cloud", "tifa", "barret"}, sayGreeting);
-
-	a1 := circleArea(10.5);
-	a2 := circleArea(15);
-
-	fmt.Printf("circle 1 is %0.3f and circle 2 is %0.3f \n", a1, a2);
+	fn2, sn2 := getInitials("tifa    ");
+	fmt.Println(fn2, sn2);
 }
