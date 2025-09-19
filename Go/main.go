@@ -1,39 +1,19 @@
 package main
 
-import (
-	"fmt";
-	"math"
-)
+import "fmt"
 
-func sayGreeting(name string)  {
-	fmt.Printf("Good morning %v \n", name);
-}
+func main() {
 
-func sayBye(name string)  {
-	fmt.Printf("Good bye %v \n", name);
-}
+	menu := map[string]float64{"soup": 499, "pie": 799, "salad": 6.99, "tofee pudding": 5.55}
 
-//* passing a slice and fuction
-func cycleNames (n []string, f func(string)) {
-	for _, name := range n {
-		f(name);
+	fmt.Println(menu)
+	fmt.Println(menu["pie"])
+
+	//* looping maps
+	for key, value := range menu {
+		fmt.Println(key, "-", value)
 	}
-}
 
-//* returning a value from a function
-func circleArea(r float64) float64{
-	area := math.Pi * r * r;
-	return area
-}
-
-func main()  {
-	sayGreeting("mario");
-	sayBye("lugi");
-
-	cycleNames([]string{"cloud", "tifa", "barret"}, sayGreeting);
-
-	a1 := circleArea(10.5);
-	a2 := circleArea(15);
-
-	fmt.Printf("circle 1 is %0.3f and circle 2 is %0.3f \n", a1, a2);
+	//* update a map
+	menu["soup"] = 4.99
 }
