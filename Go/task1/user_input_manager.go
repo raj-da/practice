@@ -11,6 +11,24 @@ import (
 // Current student record
 var currentRecord = newStudent("")
 
+
+//* ...............................................................................................................//
+//*                                                                                                                //
+//*                                                                                                                //
+//*                          			 Input Manager and Validator                                               //
+//*                                                                                                                //
+//*                                                                                                                //
+//* ...............................................................................................................//
+
+// userInput takes prompt and returns user input
+func userInput(prompt string) string {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print(prompt)
+	inputValue, _ := reader.ReadString('\n')
+	inputValue = strings.TrimSpace(inputValue)
+	return inputValue
+}
+
 // intInputValidator takes a string promt and returns an  int
 // if user inputs int else exits if user doesnt for 3 tires
 func intInputValidator(prompt string) int {
@@ -51,7 +69,7 @@ func float64InputValidator(prompt string) float64 {
 	return -1.0
 }
 
-// stringInputValidator takes a string promt and returns an string
+// stringInputValidator takes a string promt and returns a string
 // if user inputs non empty string else exits program if user doesnt for 3 tires
 func stringInputValidator(prompt string) string {
 	maxTries := 3
@@ -71,34 +89,31 @@ func stringInputValidator(prompt string) string {
 	return ""
 }
 
-func exitProgram(prompt string, statusCode int) {
-	fmt.Println(prompt)
-	os.Exit(statusCode)
-}
+func courseIndexValidator(prompt string) int {
+	maxTries := 3
+	for i := 0; i < maxTries; i++ {
+		userChoice := intInputValidator(prompt)
+		if (userChoice > 0) && (userChoice <= len(currentRecord.courses)) {
+			return userChoice
+		}
 
-func displayActions() {
-	fmt.Println("1. Create a record")
-	fmt.Println("2. Get Avarage")
-	fmt.Println("3. Edit name")
-	fmt.Println("4. Edit score")
-	fmt.Println("5. Edit course name")
-	fmt.Println("6. Delete course")
-	fmt.Println("7. Exit")
-}
-
-func displayCourses() map[int]string {
-	indexToCourse := map[int]string{}
-	i := 1
-	for course := range currentRecord.courses {
-		indexToCourse[i] = course
-		fmt.Println(i, course)
-		i += 1
+		fmt.Println("Invalid Input, please enter a valid input")
 	}
-	return indexToCourse
+	exitProgram("Exiting program", 1)
+	// This will never be reached, but is required by Go syntax
+	return -1
 }
+
+
+//* ...............................................................................................................//
+//*                                                                                                                //
+//*                                                                                                                //
+//*                          			      User Choice Manager                                                  //
+//*                                                                                                                //
+//*                                                                                                                //
+//* ...............................................................................................................//
 
 func manageUserMainChoice(choice int) {
-	// TODO: complete each switch case
 	switch choice {
 	case 1:
 		if currentRecord.name == "" {
@@ -141,7 +156,6 @@ func manageUserMainChoice(choice int) {
 }
 
 func manageUserCourseChoice(choice int) {
-	// TODO: complete this function
 	if currentRecord.name != "" {
 		indexToCourse := displayCourses()
 		fmt.Println(indexToCourse[9])
@@ -164,29 +178,40 @@ func manageUserCourseChoice(choice int) {
 	}
 }
 
-func userInput(prompt string) string {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print(prompt)
-	inputValue, _ := reader.ReadString('\n')
-	inputValue = strings.TrimSpace(inputValue)
-	return inputValue
+//* ...............................................................................................................//
+//*                                                                                                                //
+//*                                                                                                                //
+//*                          			      Display functions                                                    //
+//*                                                                                                                //
+//*                                                                                                                //
+//* ...............................................................................................................//
+
+func exitProgram(prompt string, statusCode int) {
+	fmt.Println(prompt)
+	os.Exit(statusCode)
+}
+
+func displayActions() {
+	fmt.Println("1. Create a record")
+	fmt.Println("2. Get Avarage")
+	fmt.Println("3. Edit name")
+	fmt.Println("4. Edit score")
+	fmt.Println("5. Edit course name")
+	fmt.Println("6. Delete course")
+	fmt.Println("7. Exit")
+}
+
+func displayCourses() map[int]string {
+	indexToCourse := map[int]string{}
+	i := 1
+	for course := range currentRecord.courses {
+		indexToCourse[i] = course
+		fmt.Println(i, course)
+		i += 1
+	}
+	return indexToCourse
 }
 
 func displayError(message string) {
 	fmt.Println(message)
-}
-
-func courseIndexValidator(prompt string) int {
-	maxTries := 3
-	for i := 0; i < maxTries; i++ {
-		userChoice := intInputValidator(prompt)
-		if (userChoice > 0) && (userChoice <= len(currentRecord.courses)) {
-			return userChoice
-		}
-
-		fmt.Println("Invalid Input, please enter a valid input")
-	}
-	exitProgram("Exiting program", 1)
-	// This will never be reached, but is required by Go syntax
-	return -1
 }
