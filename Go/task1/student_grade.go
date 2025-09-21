@@ -55,3 +55,11 @@ func (s *student) deleteCourse(name string) {
 	delete(s.courses, name)
 	fmt.Printf("Delete course name %v successfuly \n", name)
 }
+
+
+func newStudent(name string) student {
+	return student{
+		name: name,
+		courses: make(map[string]float64),
+	}
+}

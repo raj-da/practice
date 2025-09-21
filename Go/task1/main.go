@@ -1,10 +1,11 @@
 package main
 
-
-
 func main() {
-	
-}
+	choice := -1
+	for {
+		displayActions()
+		choice = intInputValidator("Enter your choice: ")
 
-// TODO: complete user input and input validation
-// TODO: add file write functionality
+		manageUserMainChoice(choice)
+	}
+}

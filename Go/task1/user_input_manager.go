@@ -8,59 +8,72 @@ import (
 	"strings"
 )
 
-// intInputValidator takes a string promt and returns an (true, int) 
-// if user inputs int else (false, -1) if user doesnt for 3 tires
-func intInputValidator(prompt string) (bool, int) {
+// Current student record
+var currentRecord = newStudent("")
+
+// intInputValidator takes a string promt and returns an  int
+// if user inputs int else exits if user doesnt for 3 tires
+func intInputValidator(prompt string) int {
 	maxTries := 3
 
 	for i := 0; i < maxTries; i++ {
 		userIntInput, err := strconv.Atoi(userInput(prompt))
 		if err == nil && userIntInput >= 0 {
-			return true, userIntInput
+			return userIntInput
 		}
 		fmt.Println("Error taking input, please enter a positive integer only! Example: 8, 5...")
 	}
 
 	// If all attempts fail
-	return false, -1
+	exitProgram("Exiting program", 1)
+
+	// This line is never reached, but required by Go syntax
+	return -1
 }
-// float64InputValidator takes a string promt and returns an (true, float) 
-// if user inputs float else (false, -1) if user doesnt for 3 tires
-func float64InputValidator(prompt string) (bool, float64) {
+
+// float64InputValidator takes a string promt and returns an float
+// if user inputs float else exits the program if user doesnt for 3 tires
+func float64InputValidator(prompt string) float64 {
 	maxTries := 3
 
 	for i := 0; i < maxTries; i++ {
 		userFloatInput, err := strconv.ParseFloat(userInput(prompt), 64)
 		if err == nil && userFloatInput >= 0.0 {
-			return true, userFloatInput
+			return userFloatInput
 		}
 		fmt.Println("Error taking input, please enter a positive decimal only! Example: 60, 78.4...")
 	}
 
 	// If all attempts fail
-	return false, -1.0
+	exitProgram("Exiting program", 1)
+
+	// This line is never reached, but required by Go syntax
+	return -1.0
 }
 
-// stringInputValidator takes a string promt and returns an (true, string) 
-// if user inputs non empty string else (false, "") if user doesnt for 3 tires
-func stringInputValidator(prompt string) (bool, string) {
+// stringInputValidator takes a string promt and returns an string
+// if user inputs non empty string else exits program if user doesnt for 3 tires
+func stringInputValidator(prompt string) string {
 	maxTries := 3
 
 	for i := 0; i < maxTries; i++ {
 		userStringInput := userInput(prompt)
 		if userStringInput != "" {
-			return true, userStringInput
+			return userStringInput
 		}
 		fmt.Println("Error taking input, please enter a valid input")
 	}
 
 	// If all attempts fail
-	return false, ""
+	exitProgram("Exiting program", 1)
+
+	// This line is never reached, but required by Go syntax
+	return ""
 }
 
-func ExitProgram(prompt string) {
+func exitProgram(prompt string, statusCode int) {
 	fmt.Println(prompt)
-	os.Exit(1)
+	os.Exit(statusCode)
 }
 
 func displayActions() {
@@ -86,27 +99,47 @@ func displayCourses(s student) map[int]string {
 
 func manageUserMainChoice(choice int) {
 	// TODO: complete each switch case
-	currentRecord := student{}
-	println(currentRecord.name)
-	for choice != 7 {
-		switch choice {
-		case 1:
-			
-		case 2:
+	switch choice {
+	case 1:
+		if currentRecord.name == "" {
+			nameInput := stringInputValidator("Enter your name: ")
+			numberOfCoursesInput := intInputValidator("Enter number of courses: ")
 
-		case 3:
-
-		case 4:
-
-		case 5:
-
-		case 6:
-
-		default:
-			fmt.Println("Invalide choice, Please choose values from 1 - 6")
+			currentRecord.setName(nameInput)
+			for i := 0; i < numberOfCoursesInput; i++ {
+				courseNameInput := stringInputValidator(fmt.Sprintf("%v. Course Name: ", i))
+				courseGradeInput := float64InputValidator(fmt.Sprintf("%v course grade: ", courseNameInput))
+				currentRecord.addCourse(courseNameInput, courseGradeInput)
+			}
+		} else {
+			displayError("Student Account already exists")
 		}
+	case 2:
+		if currentRecord.name != "" {
+			currentRecord.printAvarage()
+		} else {
+			displayError("Error No Record!")
+		}
+	case 3:
+		if currentRecord.name != "" {
+			newNameInput := stringInputValidator("New name")
+			currentRecord.name = newNameInput
+		} else {
+			displayError("No Student Record to Edit")
+		}
+
+	case 4:
+
+	case 5:
+
+	case 6:
+
+	case 7:
+		fmt.Println("Thankyou for using our program!")
+		exitProgram("Ending program", 0)
+	default:
+		fmt.Println("Invalide choice, Please choose values from 1 - 6")
 	}
-	fmt.Println("Thankyou for using our program!")
 
 }
 
@@ -121,4 +154,8 @@ func userInput(prompt string) string {
 	inputValue, _ := reader.ReadString('\n')
 	inputValue = strings.TrimSpace(inputValue)
 	return inputValue
+}
+
+func displayError(message string) {
+	fmt.Println(message)
 }
