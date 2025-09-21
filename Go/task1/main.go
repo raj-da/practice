@@ -5,7 +5,6 @@ func main() {
 	for {
 		displayActions()
 		choice = intInputValidator("Enter your choice: ")
-
 		manageUserMainChoice(choice)
 	}
 }

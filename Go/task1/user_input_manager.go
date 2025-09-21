@@ -145,17 +145,19 @@ func manageUserCourseChoice(choice int) {
 	if currentRecord.name != "" {
 		indexToCourse := displayCourses()
 		fmt.Println(indexToCourse[9])
+
+		courseIndexInput := courseIndexValidator("Course Number: ")
+		courseName := indexToCourse[courseIndexInput]
+
 		switch choice {
 		case 4:
-			courseIndexInput := courseIndexValidator("Course Number: ")
-			courseName := indexToCourse[courseIndexInput]
-
 			newScoreInput := float64InputValidator("New Score: ")
-			currentRecord.courses[courseName] = newScoreInput
+			currentRecord.editCourseScore(courseName, newScoreInput)
 		case 5:
-
+			UpdatedCourseNameInput := stringInputValidator("Updated Name: ")
+			currentRecord.editCourseName(courseName, UpdatedCourseNameInput)
 		case 6:
-
+			currentRecord.deleteCourse(courseName)
 		}
 	} else {
 		displayError("No Student Record to Edit")
