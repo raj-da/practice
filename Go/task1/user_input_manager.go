@@ -86,10 +86,10 @@ func displayActions() {
 	fmt.Println("7. Exit")
 }
 
-func displayCourses(s student) map[int]string {
+func displayCourses() map[int]string {
 	indexToCourse := map[int]string{}
 	i := 1
-	for course := range s.courses {
+	for course := range currentRecord.courses {
 		indexToCourse[i] = course
 		fmt.Println(i, course)
 		i += 1
@@ -128,11 +128,8 @@ func manageUserMainChoice(choice int) {
 			displayError("No Student Record to Edit")
 		}
 
-	case 4:
-
-	case 5:
-
-	case 6:
+	case 4, 5, 6:
+		manageUserCourseChoice(choice)
 
 	case 7:
 		fmt.Println("Thankyou for using our program!")
@@ -145,7 +142,24 @@ func manageUserMainChoice(choice int) {
 
 func manageUserCourseChoice(choice int) {
 	// TODO: complete this function
-	//* should manage course related issues like edit, delete etc...
+	if currentRecord.name != "" {
+		indexToCourse := displayCourses()
+		fmt.Println(indexToCourse[9])
+		switch choice {
+		case 4:
+			courseIndexInput := courseIndexValidator("Course Number: ")
+			courseName := indexToCourse[courseIndexInput]
+
+			newScoreInput := float64InputValidator("New Score: ")
+			currentRecord.courses[courseName] = newScoreInput
+		case 5:
+
+		case 6:
+
+		}
+	} else {
+		displayError("No Student Record to Edit")
+	}
 }
 
 func userInput(prompt string) string {
@@ -158,4 +172,19 @@ func userInput(prompt string) string {
 
 func displayError(message string) {
 	fmt.Println(message)
+}
+
+func courseIndexValidator(prompt string) int {
+	maxTries := 3
+	for i := 0; i < maxTries; i++ {
+		userChoice := intInputValidator(prompt)
+		if (userChoice > 0) && (userChoice <= len(currentRecord.courses)) {
+			return userChoice
+		}
+
+		fmt.Println("Invalid Input, please enter a valid input")
+	}
+	exitProgram("Exiting program", 1)
+	// This will never be reached, but is required by Go syntax
+	return -1
 }
